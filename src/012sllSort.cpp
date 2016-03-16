@@ -22,5 +22,26 @@ struct node {
 };
 
 void sll_012_sort(struct node *head){
-	
+
+	struct node *newnode = (struct node*)malloc(sizeof(struct node));
+	newnode = head;
+	int count[3] = { 0, 0, 0 }, index = 0;
+	while (newnode != NULL)
+	{
+		count[newnode->data] += 1;           //counting number of 0's , 1's , 2's and storing them at respective 012 index positions
+		newnode= newnode->next;
+	}
+
+	newnode = head;
+	while(newnode != NULL)
+	{
+		if (count[index] == 0)           //if number of 0's or 1's are zero then move to next position 
+			index++;
+		else
+		{
+			newnode->data = index;
+			count[index]--;               //decrementing count of 012 till it becomes zero
+			newnode = newnode->next;
+		}
+	}
 }
