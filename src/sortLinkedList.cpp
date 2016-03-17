@@ -17,7 +17,42 @@ struct node {
 	int num;
 	struct node *next;
 };
+void swap(struct node *a, struct node *b);
 
-struct node * sortLinkedList(struct node *head) {
-	return NULL;
+void swap(struct node *a, struct node *b)
+{
+	int temp = a->num;
+	a->num = b->num;
+	b->num = temp;
 }
+struct node * sortLinkedList(struct node *head) {
+
+	if (head == NULL)
+		return NULL;
+	if (head->next == NULL)
+		return head;                                //if their is only one element then return that 1 element
+	
+	int check = 0;
+	struct node *traverse = NULL, *temp = NULL;
+ 
+	do
+	{
+		check = 0;
+		traverse = head;
+
+		while (traverse->next!= temp)
+		{
+			if (traverse->num > traverse->next->num)      //comparing each node with other nodes
+			{
+				swap(traverse, traverse->next);    //if true swapping two nodes and swap check will be 1
+				check = 1;
+			}
+			traverse = traverse->next;
+		}
+		temp = traverse;
+	}while(check!=0);
+
+	return head;
+}
+
+	

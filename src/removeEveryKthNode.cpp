@@ -12,24 +12,44 @@ NOTES:
 */
 
 #include <stdio.h>
-
+#include<stdlib.h>
 struct node {
 	int num;
 	struct node *next;
 };
 
-struct node * removeEveryKthNode(struct node *head, int K) {
-	if (head == NULL || K < 0 || K ==0 || K==1)
-		return NULL;
+
+
+struct node *removeEveryKthNode(struct node *head, int K)
+{
+	
+	if (head == NULL || K<1) 
+		return NULL;                   //Error cases
+	if (K == 1){
+		head = NULL;                 //if k == 1 all nodes must be deleted, then return NULL
+	    return head;
+    } 
 	int index = 0;
-	for (index = 1; head != NULL; index++)
-	{
-		if (index % K == 0){
-			head = head->next;
-			head->next = (head->next)->next;
+	struct node *newnode = head;
+
+	while (head->next != NULL){
+
+		index++;
+		if (index == K - 1)
+		{
+			if ((head->next->next) == NULL){              //if element next to Kth element is NULL then assign kth element as NULL and exit
+						
+				head->next = NULL;
+				break;
+			}
+			else
+				head->next = (head->next)->next;      //Kth node is replaced by next node to that of kth node
+
+		   index = 0;                       
 		}
-		//printf("  %d", head1->data);
 		head = head->next;
+
 	}
-	return head;
+
+	return newnode;
 }
